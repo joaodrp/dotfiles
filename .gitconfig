@@ -1,0 +1,18 @@
+[color]
+	ui = true
+[user]
+	name = João Pereira
+	email = joaodrp@gmail.com
+[core]
+  autocrlf = false
+	safecrlf = false
+	excludesfile = ~/.gitignore_global
+  editor = vim
+	pager = diff-so-fancy | less --tabs=1,5 -R
+[github]
+  user = joaodrp
+[color]
+  branch = auto
+  diff = auto
+  status = auto
+	ui = true
