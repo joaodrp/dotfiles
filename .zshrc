@@ -31,6 +31,7 @@ export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load
 ZSH_THEME="robbyrussell"
+#ZSH_THEME="robbyrussell"
 
 # Disable auto-setting terminal title
 DISABLE_AUTO_TITLE="true"
@@ -46,11 +47,11 @@ source $ZSH/oh-my-zsh.sh
 
 # Which plugins would you like to load (plugins in ~/.oh-my-zsh/plugins/*)
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-  plugins=(git ruby rbenv bundler rake python pyenv pip virtualenv tmux docker docker-compose)
+  plugins=(git ruby bundler rake pyenv pip tmux docker docker-compose node npm gulp bower)
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  plugins=(git ruby rbenv bundler rake python pyenv pip virtualenv tmux docker docker-compose brew)
+  plugins=(git ruby bundler rake pyenv pip tmux docker docker-compose brew node npm gulp bower)
 else
-  # Unknown.
+  plugins=()
 fi
 
 # You may need to manually set your language environment
@@ -63,9 +64,6 @@ if [[ -n $SSH_CONNECTION ]]; then
 else
   export EDITOR='mvim'
 fi
-
-# Compilation flags
-export ARCHFLAGS="-arch x86_64"
 
 # Term
 export TERM="screen-256color"
@@ -87,7 +85,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
   export PYENV_DIR="$HOME/.pyenv"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   export RBENV_DIR=$(brew --prefix rbenv)
-  export NVM_DIR=$(brew --prefix nvm)
+  export NVM_DIR="$HOME/.nvm" #$(brew --prefix nvm)
   export PYENV_DIR=$(brew --prefix pyenv)
 fi
 
@@ -104,6 +102,10 @@ if [ -x $PYENV_DIR ]; then
   export PATH="$PYENV_DIR/bin:$PATH"
   export PATH="$PYENV_DIR/shims:$PATH"
   eval "$(pyenv init -)"
+  export WORKON_HOME=~/.virtualenvs
+  if [ -x /usr/local/bin/virtualenvwrapper.sh ]; then
+  	source /usr/local/bin/virtualenvwrapper.sh
+  fi
 fi
 # pip should only run if there is a virtualenv currently activated
 export PIP_REQUIRE_VIRTUALENV=true
@@ -113,6 +115,7 @@ gpip(){ PIP_REQUIRE_VIRTUALENV="" pip "$@" }
 # Node.js
 if [ -x $NVM_DIR ]; then
   [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+  ln -fs "$(which node)" /usr/local/bin/node
 fi
 
 # dircolors
@@ -121,12 +124,15 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # Powerline
-if [ -x $PYENV_DIR/shims/powerline-config ]; then
-  export POWERLINE_CONFIG_COMMAND=$PYENV_DIR/shims/powerline-config
-  py_version=$(python -c 'import platform; print(platform.python_version())')
-  py_major=$(python -c 'import sys; print(sys.version_info.major)')
-  py_minor=$(python -c 'import sys; print(sys.version_info.minor)')
-  export POWERLINE_ROOT=$PYENV_DIR/versions/$py_version/lib/python$py_major.$py_minor/site-packages/powerline
-  powerline-daemon -q
-  . $POWERLINE_ROOT/bindings/zsh/powerline.zsh
-fi
+# if [ -x $PYENV_DIR/shims/powerline-config ]; then
+#   export POWERLINE_CONFIG_COMMAND=$PYENV_DIR/shims/powerline-config
+#   py_version=$(python -c 'import platform; print(platform.python_version())')
+#   py_major=$(python -c 'import sys; print(sys.version_info.major)')
+#   py_minor=$(python -c 'import sys; print(sys.version_info.minor)')
+#   export POWERLINE_ROOT=$PYENV_DIR/versions/$py_version/lib/python$py_major.$py_minor/site-packages/powerline
+#   #powerline-daemon -q
+#   #. $POWERLINE_ROOT/bindings/zsh/powerline.zsh
+# fi
+
+export PATH=/usr/local/bin:$PATH
+export PATH="/usr/local/sbin:$PATH"

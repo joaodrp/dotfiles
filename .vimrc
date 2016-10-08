@@ -91,6 +91,9 @@ set expandtab
 " Use one space, not two, after punctuation
 set nojoinspaces
 
+" Set guifont
+set guifont=Source\ Code\ Pro:h12
+
 " Show numbers
 set number
 set numberwidth=5
