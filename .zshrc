@@ -116,6 +116,7 @@ gpip(){ PIP_REQUIRE_VIRTUALENV="" pip "$@" }
 if [ -x $NVM_DIR ]; then
   [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
   ln -fs "$(which node)" /usr/local/bin/node
+  ln -fs "$(which eslint)" /usr/local/bin/eslint
 fi
 
 # dircolors
